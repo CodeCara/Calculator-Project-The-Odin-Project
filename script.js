@@ -52,14 +52,31 @@ const nine = document.querySelector('.nine-btn');
 
 //Display variable
 let display = document.querySelector('.display');
-display.innerText= "hi";
+//let text = display.innerText=("sfds").  This was a TEST, delete later
 
-//Remaining buttons variables
-const add = document.querySelector('.add-btn');
-const subtract = document.querySelector('.subtract-btn');
-const equals = document.querySelector('.equals-btn"');
+
+//Remaining buttons variables (slightly different names used to distinguish from math functions)
+const plus = document.querySelector('.plus-btn');
+const minus = document.querySelector('.minus-btn');
+const equals = document.querySelector('.equals-btn');
 const decimalPoint = document.querySelector('.decimal-point-btn');
-const clear = document.querySelector('.clear-btn"');
+const clear = document.querySelector('.clear-btn');
+
+////calcButtonsContainer var for event delegation
+const calcButtonsContainer = document.querySelector('.calc-buttons-container');
 
 
+//For each method to add click event to each button -  CURRENTLY WORKING
+//NEED TO MAKE NUMBERS ENTERED CUMULATIVE 
+const buttons = document.querySelectorAll('button')
+
+buttons.forEach(button => {
+  button.addEventListener("click", (event) => {
+    display.innerText = event.target.innerText;
+ let enteredValueString = display.innerText;
+ //Multiplying by 1 converts string to number
+ let enteredValueNumber = enteredValueString*1;
+ console.log(typeof(enteredValueNumber));
+  })
+})
 
