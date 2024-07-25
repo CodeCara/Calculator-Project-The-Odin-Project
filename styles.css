@@ -2,7 +2,7 @@
 * {box-sizing: border-box;}
 
 .outer-calc-container{
-    background-color: red;
+    background-color: black;
     padding: 10px;
     width: 340px;
     display: flex;

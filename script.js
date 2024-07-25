@@ -24,13 +24,12 @@ function multiply(a,b){
 
 
 
-
-
 //Operate function is not working properly YET
 function operate () {
 let firstNumber = " ";//" " assign emp strings later
 let operator = " ";//might need to figure out a way to destringify
 let secondNumber = " "; 
+
  let result = " "; //firstNumber+operator+secondNumber HOW TO PUT THIS TOGETHER.  template literal?
 console.log(result);
 return result;
@@ -54,7 +53,6 @@ const nine = document.querySelector('.nine-btn');
 let display = document.querySelector('.display');
 //let text = display.innerText=("sfds").  This was a TEST, delete later
 
-
 //Remaining buttons variables (slightly different names used to distinguish from math functions)
 const plus = document.querySelector('.plus-btn');
 const minus = document.querySelector('.minus-btn');
@@ -65,18 +63,94 @@ const clear = document.querySelector('.clear-btn');
 ////calcButtonsContainer var for event delegation
 const calcButtonsContainer = document.querySelector('.calc-buttons-container');
 
+//code below works!!!!!!!!!
+let firstNumber = " ";
+let secondNumber = " ";
+let firstNumberFinished = false;
+//let clearDisplayForSecondNumber = false;
 
-//For each method to add click event to each button -  CURRENTLY WORKING
-//NEED TO MAKE NUMBERS ENTERED CUMULATIVE 
 const buttons = document.querySelectorAll('button')
 
 buttons.forEach(button => {
-  button.addEventListener("click", (event) => {
-    display.innerText = event.target.innerText;
- let enteredValueString = display.innerText;
- //Multiplying by 1 converts string to number
- let enteredValueNumber = enteredValueString*1;
- console.log(typeof(enteredValueNumber));
-  })
-})
+button.addEventListener("click", (event) => {
+    
+let eventTargetText = event.target.innerText;
+
+//console.log(eventTarget.innerText);
+ if(firstNumber === " "
+    && firstNumberFinished === false)
+  
+    {firstNumber=eventTargetText;
+        console.log(eventTargetText);
+    display.innerText=firstNumber;
+}
+
+
+else if (firstNumber !== " "
+    && eventTargetText !== '+'
+    && eventTargetText !== '-'
+    && eventTargetText !== 'x'
+    && eventTargetText !== '/'
+    && eventTargetText !== 'Clear'
+    && firstNumberFinished === false
+) 
+{firstNumber+=eventTargetText;
+    display.innerText=firstNumber;
+console.log(firstNumber);//firstNumber is  string at this point
+console.log(typeof(firstNumber));
+
+}
+
+
+
+if (eventTargetText === '+'
+|| eventTargetText === '-'
+|| eventTargetText === 'x'
+|| eventTargetText === '/'
+|| eventTargetText === 'Clear'
+)//check if should be included
+{firstNumberFinished=true;
+    eventTargetText = "";
+}
+
+if(secondNumber === " "
+&& firstNumberFinished === true)
+
+{secondNumber=eventTargetText;
+    console.log(secondNumber + '2nd number');
+display.innerText= secondNumber;
+}
+
+
+else if (secondNumber !== " "
+&& firstNumberFinished === true
+) 
+{secondNumber+=eventTargetText;
+display.innerText=secondNumber;
+console.log(secondNumber);//firstNumber is  string at this point
+console.log(typeof(secondNumber));
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+})})
 
