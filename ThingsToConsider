@@ -3,3 +3,32 @@ MATH OPS
 
 
 NEED TO CONVERT NUMBER STRINGS TO NUMBERS!
+
+25/7 MULTI DIGIT NOT WORKING FOR SECOND NUMBER...FIX FUNC LINE 210
+
+//27/7/...9.15am........result of FIRST calculation is now appearing as firstNumber! after reginning functions....try to clean everything up and retry
+
+28/7
+
+
+...need to workign from line 260.  getSecondNumb is casuing inf loop
+
+check from line 274
+
+line 356, this is where the + trigger is . the getSecondNumber part?
+
+display.innerText= secondNumber;....check this line
+
+line 251: display.innerText= secondNumber
+
+from line 230 really impo. changed resulat already calc to false!!!! think the error is here
+
+check line 287
+
+
+CHECK FROM LINE 249!!!!! HOW SECOND NUM AFTER RRESULT IS WORKED OUT!
+
+line 257 diplay = second Number
+37, display = result
+
+I think 249 is the problem...new events being added to OLD second number
