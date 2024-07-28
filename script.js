@@ -15,69 +15,40 @@ let resultAlreadyCalculated= false;
 //GET ADD FUNCTION WORKING FIRST, THEN UPDATE THE OTHERS
 function add()
 
-{
-
-   result = (firstNumber*1) + (secondNumber*1);
-  display.innerText= result;
- // resultAlreadyCalculated=true; THIS LINE IS NOT DOING ANYTHING - CHECK
-  firstNumber=result;
-   return result;
-   }
+{   
+    result = (firstNumber*1) + (secondNumber*1);
+    display.innerText= result;
+    firstNumber=result;
+    return result;
+}
    
 function subtract(){
-    if (result === ' ')
-    { 
-    result = (firstNumber*1) - (secondNumber*1);
-   display.innerText= result;
-    return result;
-    }
- 
- else
- 
- {
-     firstNumber=result;
-     result = (firstNumber*1) - (secondNumber*1);
-     display.innerText= result;
-     return result;
-    }
+    {
+        result = (firstNumber*1) - (secondNumber*1);
+        display.innerText= result;
+        firstNumber=result;
+        return result;
+        } 
  
  }
 
-function divide(){
-    if (result === ' ')
-    { 
-    result = (firstNumber*1) / (secondNumber*1);
-   display.innerText= result;
-    return result;
-    }
- 
- else
+function divide()
  
  {
-     firstNumber=result;
-     result = (firstNumber*1) / (secondNumber*1);
-     display.innerText= result;
-     return result;
-    }
- 
+    result = (firstNumber*1) / (secondNumber*1);
+    display.innerText= result;
+    firstNumber=result;
+    return result;
+    
  }
 
 function multiply() {
-    if (result === ' ')
-    { 
+
     result = (firstNumber*1) * (secondNumber*1);
-   display.innerText= result;
+    display.innerText= result;
+    firstNumber=result;
     return result;
-    }
- 
- else
- 
- {
-     firstNumber=result;
-     result = (firstNumber*1) * (secondNumber*1);
-     display.innerText= result;
-     return result;
-    }
+   
  
  }
 
@@ -136,7 +107,7 @@ function setNumbers(){
         firstNumberFinished === true;
     }
 
-    result = (firstNumber*1) + (secondNumber*1);
+   // result = (firstNumber*1) + (secondNumber*1);
   
 }
 
@@ -169,7 +140,7 @@ else if
 {
     
 secondNumber+=event.target.innerText; 
-secondNumber=secondNumber*1;
+//secondNumber=secondNumber*1;
 display.innerText=secondNumber;
 secondNumberFinished=true;
 
@@ -200,7 +171,7 @@ if ((event.target.innerText === '+'
 }
 
 
-if ((event.target.innerText === '+'
+else if ((event.target.innerText === '+'
 || event.target.innerText === '-'
 || event.target.innerText === 'x'
 || event.target.innerText === '/') 
@@ -232,34 +203,77 @@ if (event.target.innerText==='='
 
 
     else if (event.target.innerText==='='
-    && operator==='+' && resultAlreadyCalculated===true) //add in condition for IF result exists!
+    && operator==='+' 
+    && resultAlreadyCalculated===true) //add in condition for IF result exists!
     {firstNumberFinished===true;
         setNumbers();///new line to reset 2nd number
         add(); 
-        resultAlreadyCalculated=true;
+       // resultAlreadyCalculated=true;
     }
 
 
-//RESULT CHANGING TO FIRSTNUM SHOULD HAPPEN ON CLICK OF =!!!!
+    //SUBTRACT
+    if (event.target.innerText==='='
+    && operator==='-' 
+    && resultAlreadyCalculated===false) //result doesn't exist until add is called!!!!
+    {
+       subtract(); 
+        resultAlreadyCalculated=true;
+    }
+    
+    
+    
+        else if (event.target.innerText==='='
+        && operator==='-' 
+        && resultAlreadyCalculated===true) //add in condition for IF result exists!
+        {firstNumberFinished===true;
+            setNumbers();///new line to reset 2nd number
+            subtract(); 
+           // resultAlreadyCalculated=true;
+        }
 
-else if (event.target.innerText==='='
 
-&& operator==='-') 
-{firstNumberFinished===true;//The trigger for this is the '=' sign
-    subtract() 
-}
+         //MULTIPLY
+    if (event.target.innerText==='='
+    && operator==='x' 
+    && resultAlreadyCalculated===false) //result doesn't exist until add is called!!!!
+    {
+       multiply(); 
+        resultAlreadyCalculated=true;
+    }
+    
+    
+    
+        else if (event.target.innerText==='='
+        && operator==='x' 
+        && resultAlreadyCalculated===true) //add in condition for IF result exists!
+        {firstNumberFinished===true;
+            setNumbers();///new line to reset 2nd number
+            multiply(); 
+           // resultAlreadyCalculated=true;
+        }
 
-else if (event.target.innerText==='='
+      //DIVIDE
+      if (event.target.innerText==='='
+      && operator==='/' 
+      && resultAlreadyCalculated===false) //result doesn't exist until add is called!!!!
+      {
+         divide(); 
+          resultAlreadyCalculated=true;
+      }
+      
+      
+      
+          else if (event.target.innerText==='='
+          && operator==='/' 
+          && resultAlreadyCalculated===true) //add in condition for IF result exists!
+          {firstNumberFinished===true;
+              setNumbers();///new line to reset 2nd number
+              divide(); 
+             // resultAlreadyCalculated=true;
+          }
 
-&& operator==='x') 
-{firstNumberFinished===true;//The trigger for this is the '=' sign
-    multiply()}
 
-else if (event.target.innerText==='='
-
-&& operator==='/') 
-{firstNumberFinished===true;//The trigger for this is the '=' sign
-    divide()}
 
 }
 
