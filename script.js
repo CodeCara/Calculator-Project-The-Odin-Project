@@ -99,7 +99,7 @@ const nine = document.querySelector('.nine-btn');
 const plus = document.querySelector('.plus-btn');
 const minus = document.querySelector('.minus-btn');
 const equals = document.querySelector('.equals-btn');
-const decimalPoint = document.querySelector('.decimal-point-btn');
+const decimalPoint = document.querySelector('.decimal-point-btn');//needed?
 const clear = document.querySelector('.clear-btn');
 
 
@@ -109,6 +109,22 @@ const calcButtonsContainer = document.querySelector('.calc-buttons-container');
 const buttons = document.querySelectorAll('button')
 
 
+//Clear function
+function clearAll() {
+  
+    firstNumber = " ";
+    secondNumber = " ";
+    operator = " ";
+    firstNumberFinished = false;
+    secondNumberFinished = false;//is this needed?
+    result = ' ';
+    display.innerText= '0';  //check this
+    resultAlreadyCalculated= false;
+console.log('clear all func working');
+
+
+
+}
 
 function setNumbers(){    
  if (firstNumberFinished===true) {
@@ -199,6 +215,9 @@ secondNumberFinished=true;
 } 
 
     }
+//Clear function event listener
+
+
 
 
 buttons.forEach(button => {
@@ -334,11 +353,10 @@ if (event.target.innerText==='='
           && resultAlreadyCalculated===false
         && secondNumber == 0
         ) //result doesn't exist until add is called!!!!
-          {  console.log(secondNumber);
-            alert ("You can't divide by zero.  Please enter a different number to divide by.");
-            getSecondNumber();//new, check this
-             divide(); 
-              resultAlreadyCalculated=true;
+          { console.log('line 356 working'); 
+            
+            display.innerText="OMG, press 'Clear' and start again!";
+         
           }
           
           
@@ -347,16 +365,14 @@ if (event.target.innerText==='='
               && operator==='/' 
               && resultAlreadyCalculated===true
             && secondNumber == 0) //add in condition for IF result exists!
-              { 
-                firstNumberFinished===true;
-                alert ("You can't divide by zero.  Please enter a different number to divide by.");
-                getSecondNumber();//new, check this
-                  setNumbers();///new line to reset 2nd number
-                  divide(); 
+              { console.log('line 370 working'); 
+               
+                display.innerText="OMG, press 'Clear' and start again!";
+                
                  // resultAlreadyCalculated=true;
               }  
 }
-
+clear.addEventListener("click", clearAll);
 operate();
 
 
