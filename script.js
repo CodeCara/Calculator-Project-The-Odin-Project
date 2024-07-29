@@ -152,8 +152,8 @@ function getSecondNumber() {if (secondNumber === " "
 && event.target.innerText !== "/"
 && event.target.innerText !== "x"
 && event.target.innerText !== "="
-&& event.target.innerText !== "Clear"
-&& event.target.innerText !== "0" )
+&& event.target.innerText !== "Clear")
+//&& event.target.innerText !== "0" )//Should not be provided for here
 
 {
     secondNumber=event.target.innerText;  
@@ -161,7 +161,7 @@ display.innerText= secondNumber;
 } 
 
 //Making provision for secondNum = zero here
-else if (secondNumber === " "
+/* DELETE??????????? else if (secondNumber === " "
 && firstNumberFinished === true
 && resultAlreadyCalculated === false
 && event.target.innerText !== "+"
@@ -169,24 +169,12 @@ else if (secondNumber === " "
 && event.target.innerText !== "/"
 && event.target.innerText !== "x"
 && event.target.innerText !== "="
-&& event.target.innerText !== "Clear"
-&& event.target.innerText === "0" )
+&& event.target.innerText !== "Clear")
+//&& event.target.innerText === "0" ) //Should not be provided for here
 
 {
   alert("You can't divide by 0!  Enter a different number.")
-} 
-
-
-
-
-
-
-
-
-
-
-
-
+}  */
 
 
 
@@ -339,11 +327,16 @@ if (event.target.innerText==='='
              // resultAlreadyCalculated=true;
           }
 
-          
+          //Think these two conditions below are duplicated - use to provide for <1numbers
+          //>0
           if (event.target.innerText==='='
           && operator==='/' 
-          && resultAlreadyCalculated===false) //result doesn't exist until add is called!!!!
-          {  
+          && resultAlreadyCalculated===false
+        && secondNumber == 0
+        ) //result doesn't exist until add is called!!!!
+          {  console.log(secondNumber);
+            alert ("You can't divide by zero.  Please enter a different number to divide by.");
+            getSecondNumber();//new, check this
              divide(); 
               resultAlreadyCalculated=true;
           }
@@ -352,9 +345,12 @@ if (event.target.innerText==='='
           
               else if (event.target.innerText==='='
               && operator==='/' 
-              && resultAlreadyCalculated===true) //add in condition for IF result exists!
+              && resultAlreadyCalculated===true
+            && secondNumber == 0) //add in condition for IF result exists!
               { 
                 firstNumberFinished===true;
+                alert ("You can't divide by zero.  Please enter a different number to divide by.");
+                getSecondNumber();//new, check this
                   setNumbers();///new line to reset 2nd number
                   divide(); 
                  // resultAlreadyCalculated=true;
