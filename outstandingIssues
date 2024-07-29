@@ -1,0 +1,4 @@
+Mon 29/7/24
+Updated the code to reject zero valss, but did not account for numbers <1 
+e.g. 0.1 (the value is rejected on the click of the first zero - need to fix this)
+

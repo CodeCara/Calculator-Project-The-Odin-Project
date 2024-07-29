@@ -10,13 +10,42 @@ let display = document.querySelector('.display');
 let resultAlreadyCalculated= false;
 
 
-//Mathematical functions
 
-//GET ADD FUNCTION WORKING FIRST, THEN UPDATE THE OTHERS
+
+//Restrict max number of decimal places to 10
+/* function countDecimalPlaces(number) {
+    const decimalIndex = number.toString().indexOf('.');
+    let count = decimalIndex >= 0 ? number.toString().length - decimalIndex - 1 : 0;
+    if (count > 10)
+        {
+    console.log(number.toFixed(10));
+    return (number.toFixed(10));;
+  }
+else {return number}
+} */
+
+function countDecimalPlaces(number) {
+    const decimalIndex = number.toString().indexOf('.');
+    let count = decimalIndex >= 0 ? number.toString().length - decimalIndex - 1 : 0;
+    if (count > 10)
+        { let numberToTenDecimalPlaces = number.toFixed(10);
+            let stringToNumber = parseFloat(numberToTenDecimalPlaces);
+            return stringToNumber;
+  }
+else {
+
+    return number}
+}
+
+
+
+
+//Mathematical functions
 function add()
 
 {   
-    result = (firstNumber*1) + (secondNumber*1);
+    result = (firstNumber*1) + (secondNumber*1);//Convert strings to numbers
+   result = countDecimalPlaces(result);//Result maintained as a number here
     display.innerText= result;
     firstNumber=result;
     return result;
@@ -24,7 +53,8 @@ function add()
    
 function subtract(){
     {
-        result = (firstNumber*1) - (secondNumber*1);
+        result = (firstNumber*1) - (secondNumber*1);//Convert strings to numbers
+        result = countDecimalPlaces(result);//Result maintained as a number here
         display.innerText= result;
         firstNumber=result;
         return result;
@@ -35,7 +65,8 @@ function subtract(){
 function divide()
  
  {
-    result = (firstNumber*1) / (secondNumber*1);
+    result = (firstNumber*1) / (secondNumber*1);//Convert strings to numbers
+    result = countDecimalPlaces(result);//Result maintained as a number here
     display.innerText= result;
     firstNumber=result;
     return result;
@@ -44,7 +75,8 @@ function divide()
 
 function multiply() {
 
-    result = (firstNumber*1) * (secondNumber*1);
+    result = (firstNumber*1) * (secondNumber*1);//Convert strings to numbers
+    result = countDecimalPlaces(result);//Result maintained as a number here
     display.innerText= result;
     firstNumber=result;
     return result;
@@ -120,12 +152,44 @@ function getSecondNumber() {if (secondNumber === " "
 && event.target.innerText !== "/"
 && event.target.innerText !== "x"
 && event.target.innerText !== "="
-&& event.target.innerText !== "Clear" )
+&& event.target.innerText !== "Clear"
+&& event.target.innerText !== "0" )
 
 {
     secondNumber=event.target.innerText;  
 display.innerText= secondNumber;
 } 
+
+//Making provision for secondNum = zero here
+else if (secondNumber === " "
+&& firstNumberFinished === true
+&& resultAlreadyCalculated === false
+&& event.target.innerText !== "+"
+&& event.target.innerText !== "-"
+&& event.target.innerText !== "/"
+&& event.target.innerText !== "x"
+&& event.target.innerText !== "="
+&& event.target.innerText !== "Clear"
+&& event.target.innerText === "0" )
+
+{
+  alert("You can't divide by 0!  Enter a different number.")
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 else if 
  ( firstNumberFinished === true
@@ -183,7 +247,6 @@ else if ((event.target.innerText === '+'
      operator=event.target.innerText;
    secondNumber=' ';
    getSecondNumber();
-   console.log(firstNumber);
     operator=event.target.innerText;
 }
  
@@ -254,6 +317,9 @@ if (event.target.innerText==='='
         }
 
       //DIVIDE
+        
+
+
       if (event.target.innerText==='='
       && operator==='/' 
       && resultAlreadyCalculated===false) //result doesn't exist until add is called!!!!
@@ -273,11 +339,31 @@ if (event.target.innerText==='='
              // resultAlreadyCalculated=true;
           }
 
-
-
+          
+          if (event.target.innerText==='='
+          && operator==='/' 
+          && resultAlreadyCalculated===false) //result doesn't exist until add is called!!!!
+          {  
+             divide(); 
+              resultAlreadyCalculated=true;
+          }
+          
+          
+          
+              else if (event.target.innerText==='='
+              && operator==='/' 
+              && resultAlreadyCalculated===true) //add in condition for IF result exists!
+              { 
+                firstNumberFinished===true;
+                  setNumbers();///new line to reset 2nd number
+                  divide(); 
+                 // resultAlreadyCalculated=true;
+              }  
 }
 
 operate();
 
 
 })})
+
+ 
