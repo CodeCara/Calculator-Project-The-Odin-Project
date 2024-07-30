@@ -355,7 +355,7 @@ if (event.target.innerText==='='
         ) //result doesn't exist until add is called!!!!
           { console.log('line 356 working'); 
             
-            display.innerText="OMG, press 'Clear' and start again!";
+            display.innerText="Dividing by zero?  Really?  Start again!";
          
           }
           
@@ -367,7 +367,7 @@ if (event.target.innerText==='='
             && secondNumber == 0) //add in condition for IF result exists!
               { console.log('line 370 working'); 
                
-                display.innerText="OMG, press 'Clear' and start again!";
+              display.innerText="Dividing by zero?  Really?  Start again!";
                 
                  // resultAlreadyCalculated=true;
               }  
