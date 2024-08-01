@@ -1,0 +1,17 @@
+//THINGS TO NOTE
+
+//The display and currentCalculation are aligned, but may not appear do due to 
+//font size difference
+
+//The alignment of the error message could have been improved
+
+//Decided to round non-integers to 6 places
+
+//Maybe a few lines of redundant code
+
+//Very little refactoring done on this project
+
+//The equalsButton function was created to avoid an infinite loop within the operate function
+
+
+      

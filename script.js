@@ -2,33 +2,23 @@
 //GLOBAL VARS
 let firstNumber = " ";
 let secondNumber = " ";
-let operator = " ";
+let firstOperator = " ";
+let secondOperator = " ";
 let firstNumberFinished = false;
 let secondNumberFinished = false;
 let result = ' ';
 let display = document.querySelector('.display');
+let currentCalculation = document.querySelector('.current-calculation');
 let resultAlreadyCalculated= false;
+let equalsActivated = false;
 
 
-
-
-//Restrict max number of decimal places to 10
-/* function countDecimalPlaces(number) {
-    const decimalIndex = number.toString().indexOf('.');
-    let count = decimalIndex >= 0 ? number.toString().length - decimalIndex - 1 : 0;
-    if (count > 10)
-        {
-    console.log(number.toFixed(10));
-    return (number.toFixed(10));;
-  }
-else {return number}
-} */
 
 function countDecimalPlaces(number) {
     const decimalIndex = number.toString().indexOf('.');
     let count = decimalIndex >= 0 ? number.toString().length - decimalIndex - 1 : 0;
     if (count > 10)
-        { let numberToTenDecimalPlaces = number.toFixed(10);
+        { let numberToTenDecimalPlaces = number.toFixed(6);
             let stringToNumber = parseFloat(numberToTenDecimalPlaces);
             return stringToNumber;
   }
@@ -40,49 +30,80 @@ else {
 
 
 
-//Mathematical functions
+//MATHEMATICAL FUNCTIONS
 function add()
 
 {   
-    result = (firstNumber*1) + (secondNumber*1);//Convert strings to numbers
+    
+    
+    result = (firstNumber*1) + (secondNumber*1);
    result = countDecimalPlaces(result);//Result maintained as a number here
-    display.innerText= result;
+   display.innerText= result;
+   currentCalculation.innerText=result;//this made result appear correctly 1 aug !
+   //
     firstNumber=result;
+    firstOperator=secondOperator;//is this correct?? ?think so
+    secondOperator=" ";
+    resultAlreadyCalculated===true;
     return result;
 }
-   
-function subtract(){
-    {
-        result = (firstNumber*1) - (secondNumber*1);//Convert strings to numbers
-        result = countDecimalPlaces(result);//Result maintained as a number here
-        display.innerText= result;
-        firstNumber=result;
-        return result;
-        } 
- 
- }
+  
+function subtract()
+
+{  
+    
+    result = (firstNumber*1) - (secondNumber*1);
+   result = countDecimalPlaces(result);//Result maintained as a number here
+   display.innerText= result;
+   currentCalculation.innerText=result;//this made result appear correctly 1 aug !
+    firstNumber=result;
+    firstOperator=secondOperator;//is this correct?? ?think so
+    secondOperator=" ";
+    resultAlreadyCalculated===true;
+    return result;
+}
+
+function multiply()
+
+{  
+    
+    result = (firstNumber*1) * (secondNumber*1);
+   result = countDecimalPlaces(result);//Result maintained as a number here
+   display.innerText= result;
+   currentCalculation.innerText=result;//this made result appear correctly 1 aug !
+    firstNumber=result;
+    firstOperator=secondOperator;//is this correct?? ?think so
+    secondOperator=" ";
+    resultAlreadyCalculated===true;
+    return result;
+}
+
 
 function divide()
- 
- {
-    result = (firstNumber*1) / (secondNumber*1);//Convert strings to numbers
-    result = countDecimalPlaces(result);//Result maintained as a number here
-    display.innerText= result;
-    firstNumber=result;
-    return result;
-    
- }
 
-function multiply() {
 
-    result = (firstNumber*1) * (secondNumber*1);//Convert strings to numbers
-    result = countDecimalPlaces(result);//Result maintained as a number here
-    display.innerText= result;
-    firstNumber=result;
-    return result;
+
    
+{
+    
+    result = (firstNumber*1) / (secondNumber*1);
+   result = countDecimalPlaces(result);//Result maintained as a number here
+   display.innerText= result;
+   currentCalculation.innerText=result;//this made result appear correctly 1 aug !
+    firstNumber=result;
+    firstOperator=secondOperator;//is this correct?? ?think so
+    secondOperator=" ";
+    resultAlreadyCalculated===true;
+    return result;
+}
+
+
+//!Function created to avoid infinite loop within the operate function
+function equalsButton()
+
+{operate();}
  
- }
+
 
 //Number buttons allocated to variables
 const one = document.querySelector('.one-btn');
@@ -98,7 +119,7 @@ const nine = document.querySelector('.nine-btn');
 //Remaining buttons variables (slightly different names used to distinguish from math functions)
 const plus = document.querySelector('.plus-btn');
 const minus = document.querySelector('.minus-btn');
-const equals = document.querySelector('.equals-btn');
+const equals = document.querySelector('.equals-btn');//delete?
 const decimalPoint = document.querySelector('.decimal-point-btn');//needed?
 const clear = document.querySelector('.clear-btn');
 
@@ -112,15 +133,20 @@ const buttons = document.querySelectorAll('button')
 //Clear function
 function clearAll() {
   
+    equalsActivated=false;
     firstNumber = " ";
     secondNumber = " ";
     operator = " ";
     firstNumberFinished = false;
     secondNumberFinished = false;//is this needed?
     result = ' ';
-    display.innerText= '0';  //check this
+    display.innerText= '0';  
+    display.style.color="black";
+    display.style.fontSize="46px";
+    currentCalculation.innerText= '0';  //check this
     resultAlreadyCalculated= false;
-console.log('clear all func working');
+   
+
 
 
 
@@ -131,17 +157,18 @@ function setNumbers(){
     getSecondNumber();
   }
     
-
+    //CAPTURE FIRST DIGIT OF FIRST NUMBER
     else if(firstNumber === " "
         && firstNumberFinished === false)
       
         {
             firstNumber=event.target.innerText;
         display.innerText=firstNumber;
+        currentCalculation.innerText=firstNumber;
     }
     
     
-    //SECOND firstNumLoop ON SCREEN AFTER SECOND CLICK!
+    //CAPTURE REMAINING DIGITS OF FIRST NUMBER
     else if (firstNumber !== " "
         && event.target.innerText !== '+'
         && event.target.innerText !== '-'
@@ -152,52 +179,33 @@ function setNumbers(){
     ) 
     {firstNumber+=event.target.innerText;
         display.innerText=firstNumber;
+        currentCalculation.innerText=firstNumber;
         firstNumberFinished === true;
     }
 
-   // result = (firstNumber*1) + (secondNumber*1);
   
 }
 
 
 function getSecondNumber() {if (secondNumber === " "
 && firstNumberFinished === true
-&& resultAlreadyCalculated === false
 && event.target.innerText !== "+"
 && event.target.innerText !== "-"
 && event.target.innerText !== "/"
 && event.target.innerText !== "x"
 && event.target.innerText !== "="
 && event.target.innerText !== "Clear")
-//&& event.target.innerText !== "0" )//Should not be provided for here
 
 {
     secondNumber=event.target.innerText;  
 display.innerText= secondNumber;
+currentCalculation.innerText+=secondNumber;
 } 
-
-//Making provision for secondNum = zero here
-/* DELETE??????????? else if (secondNumber === " "
-&& firstNumberFinished === true
-&& resultAlreadyCalculated === false
-&& event.target.innerText !== "+"
-&& event.target.innerText !== "-"
-&& event.target.innerText !== "/"
-&& event.target.innerText !== "x"
-&& event.target.innerText !== "="
-&& event.target.innerText !== "Clear")
-//&& event.target.innerText === "0" ) //Should not be provided for here
-
-{
-  alert("You can't divide by 0!  Enter a different number.")
-}  */
-
-
 
 
 else if 
  ( firstNumberFinished === true
- 
+ && secondNumber !== " "
 && event.target.innerText !== "+"
 && event.target.innerText !== "-"
 && event.target.innerText !== "/"
@@ -206,174 +214,195 @@ else if
 && event.target.innerText !== "Clear")
 
 {
-    
 secondNumber+=event.target.innerText; 
-//secondNumber=secondNumber*1;
 display.innerText=secondNumber;
-secondNumberFinished=true;
-
+currentCalculation.innerText+=event.target.innerText;
 } 
 
     }
-//Clear function event listener
 
 
 
 
+//EVENT LISTENERS FOR BUTTONS
 buttons.forEach(button => {
 button.addEventListener("click", (event) => {
  setNumbers();
- 
+
+ if (equalsActivated === true && event.target.innerText !== 'Clear')
+    {display.innerText = "ERROR. Start again.";
+ display.style.fontSize="35px";
+display.style.color="red";
+        currentCalculation.innerText = " ";
+       
+        
+    }
 
 
-//FIRST OP LOOP/CONDITION
+
+
+
+
+
+
+//CAPTURE FIRST NUMBER
 if ((event.target.innerText === '+'
 || event.target.innerText === '-'
 || event.target.innerText === 'x'
-|| event.target.innerText === '/')
+|| event.target.innerText === '/'
+|| event.target.innerText === '=')//don't think this is needed?
 && firstNumberFinished === false)
 
 
 {firstNumberFinished=true;
-    operator=event.target.innerText;
-   
-
-  
+    firstOperator=event.target.innerText;
+   currentCalculation.innerText+=firstOperator;
 }
 
-
+//TRIGGER OPERATE FUNCTION IF A SECOND OPERATOR OR '=' IS PRESSED
 else if ((event.target.innerText === '+'
 || event.target.innerText === '-'
 || event.target.innerText === 'x'
-|| event.target.innerText === '/') 
-&& (firstNumberFinished===true
-&& resultAlreadyCalculated===true))
-
+|| event.target.innerText === '/' 
+||event.target.innerText === '=' 
+&& secondOperator === " ")) 
 
 {
-     operator=event.target.innerText;
+     secondOperator=event.target.innerText;
+     secondOperator==="+";//why is this line here?
+     secondNumber===" ";
+     getSecondNumber();
+     operate();
+     display.innerText=result;
+     currentCalculation.innerText=result+firstOperator;
    secondNumber=' ';
-   getSecondNumber();
-    operator=event.target.innerText;
-}
- 
-
-//OPERATE Function
-
-function operate ()
-{
-if (event.target.innerText==='='
-&& operator==='+' 
-&& resultAlreadyCalculated===false) //result doesn't exist until add is called!!!!
-{
-   add(); 
-    resultAlreadyCalculated=true;
 }
 
+//FOR CURRENT CALCULATION?
+else if (event.target.innerText === '=' 
+
+&& secondNumber!=0
+&& secondOperator === " ") 
+
+{
+   
+     secondOperator=event.target.innerText;
+     secondOperator==="+";
+     secondNumber===" ";
+     getSecondNumber();
+     operate();
+     secondNumber=' ';
+}
+
+else if (event.target.innerText === '0'
+&& firstOperator==='/')
 
 
-    else if (event.target.innerText==='='
-    && operator==='+' 
-    && resultAlreadyCalculated===true) //add in condition for IF result exists!
-    {firstNumberFinished===true;
-        setNumbers();///new line to reset 2nd number
-        add(); 
-       // resultAlreadyCalculated=true;
+{      
+    display.style.fontSize="25px";
+    display.style.color="red";
+     display.innerText='Dividing by zero?  Really?  Try again!';
+     currentCalculation.innerText=" ";
+
+}
+
+
+else if (event.target.innerText==='=') {
+   operate();
     }
 
 
-    //SUBTRACT
-    if (event.target.innerText==='='
-    && operator==='-' 
-    && resultAlreadyCalculated===false) //result doesn't exist until add is called!!!!
-    {
+function operate ()
+
+{
+
+//ADD  
+if ((firstOperator==='+') 
+&& (secondOperator==='='
+|| secondOperator==='+'
+|| secondOperator==='-'
+|| secondOperator==='x'
+|| secondOperator==='/'
+
+))
+
+ {
+   add(); 
+    resultAlreadyCalculated=true;
+}   
+
+//SUBTRACT
+if ((firstOperator==='-') 
+    && (secondOperator==='='
+    || secondOperator==='+'
+    || secondOperator==='-'
+    || secondOperator==='x'
+    || secondOperator==='/'
+    
+    ))
+    
+    
+     {
        subtract(); 
         resultAlreadyCalculated=true;
     }
-    
-    
-    
-        else if (event.target.innerText==='='
-        && operator==='-' 
-        && resultAlreadyCalculated===true) //add in condition for IF result exists!
-        {firstNumberFinished===true;
-            setNumbers();///new line to reset 2nd number
-            subtract(); 
-           // resultAlreadyCalculated=true;
-        }
 
-
-         //MULTIPLY
-    if (event.target.innerText==='='
-    && operator==='x' 
-    && resultAlreadyCalculated===false) //result doesn't exist until add is called!!!!
-    {
-       multiply(); 
-        resultAlreadyCalculated=true;
-    }
-    
-    
-    
-        else if (event.target.innerText==='='
-        && operator==='x' 
-        && resultAlreadyCalculated===true) //add in condition for IF result exists!
-        {firstNumberFinished===true;
-            setNumbers();///new line to reset 2nd number
+//MULTIPLY
+if ((firstOperator==='x') 
+            
+    && (secondOperator==='='
+    || secondOperator==='+'
+    || secondOperator==='-'
+    || secondOperator==='x'
+    || secondOperator==='/'
+            
+    ))
+            
+            
+        {
             multiply(); 
-           // resultAlreadyCalculated=true;
-        }
-
-      //DIVIDE
+            resultAlreadyCalculated=true;//Possibly redundant code now
+         }
         
 
-
-      if (event.target.innerText==='='
-      && operator==='/' 
-      && resultAlreadyCalculated===false) //result doesn't exist until add is called!!!!
-      {
-         divide(); 
-          resultAlreadyCalculated=true;
-      }
-      
-      
-      
-          else if (event.target.innerText==='='
-          && operator==='/' 
-          && resultAlreadyCalculated===true) //add in condition for IF result exists!
-          {firstNumberFinished===true;
-              setNumbers();///new line to reset 2nd number
-              divide(); 
-             // resultAlreadyCalculated=true;
-          }
-
-          //Think these two conditions below are duplicated - use to provide for <1numbers
-          //>0
-          if (event.target.innerText==='='
-          && operator==='/' 
-          && resultAlreadyCalculated===false
-        && secondNumber == 0
-        ) //result doesn't exist until add is called!!!!
-          { console.log('line 356 working'); 
+//DIVIDE
+if ((firstOperator==='/') 
+       
+    && (secondOperator==='='
+    || secondOperator==='+'
+    || secondOperator==='-'
+    || secondOperator==='x'
+    || secondOperator==='/'
             
-            display.innerText="Dividing by zero?  Really?  Start again!";
-         
-          }
-          
-          
-          
-              else if (event.target.innerText==='='
-              && operator==='/' 
-              && resultAlreadyCalculated===true
-            && secondNumber == 0) //add in condition for IF result exists!
-              { console.log('line 370 working'); 
-               
-              display.innerText="Dividing by zero?  Really?  Start again!";
+     ))
+            
+            
+        {
+        
+        divide(); 
+        resultAlreadyCalculated=true;//Possibly redundant code now
+
+        }
+
+if (firstOperator==='=')
+    {
+       
+    equalsActivated=true;
+    equalsButton();}//or Operate?  Both do the same thing...
+
+
+
+if (secondOperator==='=')
+    {  equalsActivated===true;
                 
-                 // resultAlreadyCalculated=true;
-              }  
+        }
+         
+         
+
+    
 }
 clear.addEventListener("click", clearAll);
-operate();
+//operate();
 
 
 })})
