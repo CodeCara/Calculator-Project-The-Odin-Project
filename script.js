@@ -294,7 +294,8 @@ else if (event.target.innerText === '='
      secondNumber=' ';
 }
 
-else if (event.target.innerText === '0'
+else if (secondNumber === '0' //Bug fix 2 Aug 24
+//else if (event.target.innerText === '0'
 && firstOperator==='/')
 
 
