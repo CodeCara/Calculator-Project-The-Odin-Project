@@ -14,4 +14,9 @@
 //The equalsButton function was created to avoid an infinite loop within the operate function
 
 
+//2 Aug, bug fixed
+//2 Aug, trying to implment ability to continue calculations AFTER = has been pressed....line 233 for relevant code
+//currently trying to fix at line 160
+
+
       

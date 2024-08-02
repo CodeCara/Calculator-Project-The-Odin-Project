@@ -40,7 +40,7 @@ function add()
    result = countDecimalPlaces(result);//Result maintained as a number here
    display.innerText= result;
    currentCalculation.innerText=result;//this made result appear correctly 1 aug !
-   //
+   
     firstNumber=result;
     firstOperator=secondOperator;//is this correct?? ?think so
     secondOperator=" ";
@@ -153,7 +153,28 @@ function clearAll() {
 }
 
 function setNumbers(){    
- if (firstNumberFinished===true) {
+
+
+if (equalsActivated===true)//New if-block = Bug fix 2 aug 24
+
+    {result=firstNumber;
+        firstNumberFinished===true;
+        getSecondNumber();
+    
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+ else if (firstNumberFinished===true) {
     getSecondNumber();
   }
     
@@ -184,6 +205,8 @@ function setNumbers(){
     }
 
   
+
+
 }
 
 
@@ -229,14 +252,16 @@ buttons.forEach(button => {
 button.addEventListener("click", (event) => {
  setNumbers();
 
- if (equalsActivated === true && event.target.innerText !== 'Clear')
+
+//KEEP BLOCK BELOW FOR NOW
+/*  if (equalsActivated === true && event.target.innerText !== 'Clear')
     {display.innerText = "ERROR. Start again.";
  display.style.fontSize="35px";
 display.style.color="red";
         currentCalculation.innerText = " ";
        
         
-    }
+    } */
 
 
 
@@ -259,12 +284,32 @@ if ((event.target.innerText === '+'
    currentCalculation.innerText+=firstOperator;
 }
 
+//NEW CODE ADDED 2 AUG 24 below for calcs AFTER '='
+
+ else if ((event.target.innerText === '+'
+|| event.target.innerText === '-'
+|| event.target.innerText === 'x'
+|| event.target.innerText === '/')
+&& equalsActivated === true)
+
+
+{
+    firstNumber=countDecimalPlaces(firstNumber);
+    result=firstNumber;
+    firstOperator=event.target.innerText;
+   currentCalculation.innerText+=firstOperator;
+   secondNumber=' ';
+   getSecondNumber();
+} 
+
+
+
 //TRIGGER OPERATE FUNCTION IF A SECOND OPERATOR OR '=' IS PRESSED
 else if ((event.target.innerText === '+'
 || event.target.innerText === '-'
 || event.target.innerText === 'x'
 || event.target.innerText === '/' 
-||event.target.innerText === '=' 
+|| event.target.innerText === '=' 
 && secondOperator === " ")) 
 
 {
@@ -275,6 +320,7 @@ else if ((event.target.innerText === '+'
      operate();
      display.innerText=result;
      currentCalculation.innerText=result+firstOperator;
+display.innerText=result+firstOperator;//Bug fix 2 aug 24
    secondNumber=' ';
 }
 
