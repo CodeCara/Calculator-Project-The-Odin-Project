@@ -11,12 +11,21 @@
 
 //Very little refactoring done on this project
 
-//The equalsButton function was created to avoid an infinite loop within the operate function
 
 
+
+//BUG FIXING
 //2 Aug, bug fixed
 //2 Aug, trying to implment ability to continue calculations AFTER = has been pressed....line 233 for relevant code
 //currently trying to fix at line 160
 
+//3 Aug 24, bug fixed; equalsButton function essentially duplicated the operate function and was called within...
+//the operate function, which threw errors (even though the app appeared to work).
+
+//3 Aug 24, Since bug fix on 2 Aug, the display number had started showing the operator as well
+//...as the number.  Fixed this today.
+
+//3 Aug 24: Noticed that dividing by 0 error prevents calculations when the denominator is 
+>0 and <1 also,  Fixed today
 
       

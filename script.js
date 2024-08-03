@@ -37,12 +37,12 @@ function add()
     
     
     result = (firstNumber*1) + (secondNumber*1);
-   result = countDecimalPlaces(result);//Result maintained as a number here
+   result = countDecimalPlaces(result);//Result maintained as a number (not string) here
    display.innerText= result;
-   currentCalculation.innerText=result;//this made result appear correctly 1 aug !
+   currentCalculation.innerText=result;
    
     firstNumber=result;
-    firstOperator=secondOperator;//is this correct?? ?think so
+    firstOperator=secondOperator;
     secondOperator=" ";
     resultAlreadyCalculated===true;
     return result;
@@ -53,11 +53,11 @@ function subtract()
 {  
     
     result = (firstNumber*1) - (secondNumber*1);
-   result = countDecimalPlaces(result);//Result maintained as a number here
+   result = countDecimalPlaces(result);//Result maintained as a number (not string) here
    display.innerText= result;
-   currentCalculation.innerText=result;//this made result appear correctly 1 aug !
+   currentCalculation.innerText=result;
     firstNumber=result;
-    firstOperator=secondOperator;//is this correct?? ?think so
+    firstOperator=secondOperator;
     secondOperator=" ";
     resultAlreadyCalculated===true;
     return result;
@@ -68,11 +68,11 @@ function multiply()
 {  
     
     result = (firstNumber*1) * (secondNumber*1);
-   result = countDecimalPlaces(result);//Result maintained as a number here
+   result = countDecimalPlaces(result);//Result maintained as a number (not string) here
    display.innerText= result;
-   currentCalculation.innerText=result;//this made result appear correctly 1 aug !
+   currentCalculation.innerText=result;
     firstNumber=result;
-    firstOperator=secondOperator;//is this correct?? ?think so
+    firstOperator=secondOperator;
     secondOperator=" ";
     resultAlreadyCalculated===true;
     return result;
@@ -85,24 +85,20 @@ function divide()
 
    
 {
-    
+
     result = (firstNumber*1) / (secondNumber*1);
-   result = countDecimalPlaces(result);//Result maintained as a number here
+   result = countDecimalPlaces(result);//Result maintained as a number (not string) here
    display.innerText= result;
-   currentCalculation.innerText=result;//this made result appear correctly 1 aug !
+   currentCalculation.innerText=result;
     firstNumber=result;
-    firstOperator=secondOperator;//is this correct?? ?think so
+    firstOperator=secondOperator;
     secondOperator=" ";
     resultAlreadyCalculated===true;
     return result;
 }
 
 
-//!Function created to avoid infinite loop within the operate function
-function equalsButton()
 
-{operate();}
- 
 
 
 //Number buttons allocated to variables
@@ -143,13 +139,9 @@ function clearAll() {
     display.innerText= '0';  
     display.style.color="black";
     display.style.fontSize="46px";
-    currentCalculation.innerText= '0';  //check this
+    currentCalculation.innerText= '0';  
     resultAlreadyCalculated= false;
    
-
-
-
-
 }
 
 function setNumbers(){    
@@ -162,16 +154,6 @@ if (equalsActivated===true)//New if-block = Bug fix 2 aug 24
         getSecondNumber();
     
     }
-
-
-
-
-
-
-
-
-
-
 
 
  else if (firstNumberFinished===true) {
@@ -205,8 +187,6 @@ if (equalsActivated===true)//New if-block = Bug fix 2 aug 24
     }
 
   
-
-
 }
 
 
@@ -223,6 +203,7 @@ function getSecondNumber() {if (secondNumber === " "
     secondNumber=event.target.innerText;  
 display.innerText= secondNumber;
 currentCalculation.innerText+=secondNumber;
+secondNumberFinished = true;//Bug fix 3 Aug 24
 } 
 
 
@@ -240,12 +221,10 @@ else if
 secondNumber+=event.target.innerText; 
 display.innerText=secondNumber;
 currentCalculation.innerText+=event.target.innerText;
+secondNumberFinished = true;//Bug fix 3 Aug 24
 } 
 
     }
-
-
-
 
 //EVENT LISTENERS FOR BUTTONS
 buttons.forEach(button => {
@@ -253,35 +232,20 @@ button.addEventListener("click", (event) => {
  setNumbers();
 
 
-//KEEP BLOCK BELOW FOR NOW
-/*  if (equalsActivated === true && event.target.innerText !== 'Clear')
-    {display.innerText = "ERROR. Start again.";
- display.style.fontSize="35px";
-display.style.color="red";
-        currentCalculation.innerText = " ";
-       
-        
-    } */
-
-
-
-
-
-
-
-
 //CAPTURE FIRST NUMBER
 if ((event.target.innerText === '+'
 || event.target.innerText === '-'
 || event.target.innerText === 'x'
 || event.target.innerText === '/'
-|| event.target.innerText === '=')//don't think this is needed?
+//|| event.target.innerText === '='//took out 3 aug
+)
 && firstNumberFinished === false)
 
 
 {firstNumberFinished=true;
     firstOperator=event.target.innerText;
    currentCalculation.innerText+=firstOperator;
+   
 }
 
 //NEW CODE ADDED 2 AUG 24 below for calcs AFTER '='
@@ -290,7 +254,7 @@ if ((event.target.innerText === '+'
 || event.target.innerText === '-'
 || event.target.innerText === 'x'
 || event.target.innerText === '/')
-&& equalsActivated === true)
+&& equalsActivated === true)//Enabling further calculations AFTER '=' pressed
 
 
 {
@@ -309,7 +273,7 @@ else if ((event.target.innerText === '+'
 || event.target.innerText === '-'
 || event.target.innerText === 'x'
 || event.target.innerText === '/' 
-|| event.target.innerText === '=' 
+//|| event.target.innerText === '=' //Bug fix 3 aug
 && secondOperator === " ")) 
 
 {
@@ -320,7 +284,6 @@ else if ((event.target.innerText === '+'
      operate();
      display.innerText=result;
      currentCalculation.innerText=result+firstOperator;
-display.innerText=result+firstOperator;//Bug fix 2 aug 24
    secondNumber=' ';
 }
 
@@ -338,20 +301,23 @@ else if (event.target.innerText === '='
      getSecondNumber();
      operate();
      secondNumber=' ';
+   
 }
 
-else if (secondNumber === '0' //Bug fix 2 Aug 24
-//else if (event.target.innerText === '0'
-&& firstOperator==='/')
 
+else if (event.target.innerText === '=' 
+&& secondNumberFinished === true
+&& secondNumber === '0'
+)
+{ display.innerText='Dividing by zero?  Really?  Try again!';
 
-{      
-    display.style.fontSize="25px";
-    display.style.color="red";
-     display.innerText='Dividing by zero?  Really?  Try again!';
-     currentCalculation.innerText=" ";
+display.style.fontSize="25px";
+display.style.color="red";
+ display.innerText='Dividing by zero?  Really?  Try again!';
+ currentCalculation.innerText=" ";
 
 }
+
 
 
 else if (event.target.innerText==='=') {
@@ -408,7 +374,7 @@ if ((firstOperator==='x')
             
         {
             multiply(); 
-            resultAlreadyCalculated=true;//Possibly redundant code now
+            resultAlreadyCalculated=true;//Possibly redundant code now?
          }
         
 
@@ -427,15 +393,16 @@ if ((firstOperator==='/')
         {
         
         divide(); 
-        resultAlreadyCalculated=true;//Possibly redundant code now
+        resultAlreadyCalculated=true;//Possibly redundant code now?
+        secondNumberFinished===true;//Possibly redundant code now?
 
         }
 
 if (firstOperator==='=')
     {
-       
     equalsActivated=true;
-    equalsButton();}//or Operate?  Both do the same thing...
+   
+}
 
 
 
@@ -449,7 +416,6 @@ if (secondOperator==='=')
     
 }
 clear.addEventListener("click", clearAll);
-//operate();
 
 
 })})
